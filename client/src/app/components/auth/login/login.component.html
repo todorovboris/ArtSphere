@@ -11,6 +11,7 @@
         required
         email
         #emailInput="ngModel"
+        (blur)="validateEmail()"
       />
       @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
       <div class="error-message">
@@ -32,6 +33,7 @@
         ngModel
         required
         #passwordInput="ngModel"
+        (blur)="validatePassword()"
       />
       @if (passwordInput.invalid && (passwordInput.dirty ||
       passwordInput.touched)) {
@@ -43,10 +45,8 @@
       }
     </div>
 
-    <!-- <button type="submit" [disabled]="loginForm.invalid">Login</button> -->
+    <button type="submit" [disabled]="!isFormValid">Login</button>
+
     <p>Don't have an account? <a routerLink="/register">Register here</a></p>
-    <!-- @if (errorMessage) {
-    <p class="server-error">{{ errorMessage }}</p>
-    } -->
   </form>
 </section>
