@@ -1,0 +1,52 @@
+<section class="auth-section">
+  <form class="auth-form" (ngSubmit)="onLogin()" method="post">
+    <h2>Login</h2>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        ngModel
+        required
+        email
+        #emailInput="ngModel"
+      />
+      @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
+      <div class="error-message">
+        @if (emailInput.errors?.['required']) {
+        <div>Email is required.</div>
+        } @if (emailInput.errors?.['email']) {
+        <div>Please enter a valid email address.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        ngModel
+        required
+        #passwordInput="ngModel"
+      />
+      @if (passwordInput.invalid && (passwordInput.dirty ||
+      passwordInput.touched)) {
+      <div class="error-message">
+        @if (passwordInput.errors?.['required']) {
+        <div>Password is required.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- <button type="submit" [disabled]="loginForm.invalid">Login</button> -->
+    <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+    <!-- @if (errorMessage) {
+    <p class="server-error">{{ errorMessage }}</p>
+    } -->
+  </form>
+</section>
