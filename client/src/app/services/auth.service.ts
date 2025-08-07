@@ -52,10 +52,24 @@ export class AuthService {
       };
 
       this._users.push(newUser);
-      this._currentUser.set(newUser);
       this._isLoggedIn.set(true);
+      this._currentUser.set(newUser);
 
       localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+      return true;
+    }
+
+    return false;
+  }
+
+  login(email: string, password: string) {
+    if (email && password) {
+      const user = this._users[0];
+      this._isLoggedIn.set(true);
+      this._currentUser.set(user);
+
+      localStorage.setItem('currentUser', JSON.stringify(user));
 
       return true;
     }
