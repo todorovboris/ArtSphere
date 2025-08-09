@@ -1,7 +1,6 @@
 <section class="auth-section">
   <form class="auth-form" (ngSubmit)="onLogin()" method="post">
     <h2>Login</h2>
-
     <div class="form-group">
       <label for="email">Email</label>
       <input
@@ -12,6 +11,7 @@
         required
         email
         #emailInput="ngModel"
+        [(ngModel)]="email"
         (blur)="validateEmail()"
       />
       @if (emailError) {
@@ -30,6 +30,7 @@
         ngModel
         required
         #passwordInput="ngModel"
+        [(ngModel)]="password"
         (blur)="validatePassword()"
       />
       @if (passwordError) {
