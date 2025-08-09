@@ -1,6 +1,7 @@
 <section class="auth-section">
   <form class="auth-form" (ngSubmit)="onLogin()" method="post">
     <h2>Login</h2>
+
     <div class="form-group">
       <label for="email">Email</label>
       <input
@@ -13,13 +14,9 @@
         #emailInput="ngModel"
         (blur)="validateEmail()"
       />
-      @if (emailInput.invalid && (emailInput.dirty || emailInput.touched)) {
+      @if (emailError) {
       <div class="error-message">
-        @if (emailInput.errors?.['required']) {
-        <div>Email is required.</div>
-        } @if (emailInput.errors?.['email']) {
-        <div>Please enter a valid email address.</div>
-        }
+        <div>{{ emailErrorMessage }}</div>
       </div>
       }
     </div>
@@ -35,12 +32,9 @@
         #passwordInput="ngModel"
         (blur)="validatePassword()"
       />
-      @if (passwordInput.invalid && (passwordInput.dirty ||
-      passwordInput.touched)) {
+      @if (passwordError) {
       <div class="error-message">
-        @if (passwordInput.errors?.['required']) {
-        <div>Password is required.</div>
-        }
+        <div>{{ passwordErrorMessage }}</div>
       </div>
       }
     </div>
