@@ -1,11 +1,13 @@
 import { Injectable, signal } from '@angular/core';
 import { User } from '../types';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private authUrl = 'http://localhost:3000/api';
   private _currentUser = signal<User | null>(null);
   private _isLoggedIn = signal<boolean>(false);
   private _users: User[] = [
@@ -38,13 +40,8 @@ export class AuthService {
     }
   }
 
-  register(
-    username: string,
-    email: string,
-    password: string,
-    rePassword: string
-  ): boolean {
-    if (username && email && password && rePassword) {
+  register(username: string, email: string, password: string): boolean {
+    if (username && email && password) {
       const newUser: User = {
         _id: `user_${Date.now()}`,
         username: username,
