@@ -12,6 +12,8 @@
         required
         minlength="3"
         #usernameInput="ngModel"
+        [(ngModel)]="username"
+        (blur)="validateUsername()"
       />
       @if (usernameError) {
       <div class="error-message">
@@ -30,6 +32,8 @@
         required
         email
         #emailInput="ngModel"
+        [(ngModel)]="email"
+        (blur)="validateEmail()"
       />
       @if (emailError) {
       <div class="error-message">
@@ -48,6 +52,8 @@
         required
         minlength="6"
         #passwordInput="ngModel"
+        [(ngModel)]="password"
+        (blur)="validatePassword()"
       />
       @if (passwordError) {
       <div class="error-message">
@@ -66,6 +72,8 @@
         required
         minlength="6"
         #rePasswordInput="ngModel"
+        [(ngModel)]="rePassword"
+        (blur)="validateRePassword()"
       />
       @if (rePasswordError) {
       <div class="error-message">
