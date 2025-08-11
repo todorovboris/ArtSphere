@@ -7,4 +7,8 @@ const { postController } = require('../controllers');
 
 router.get('/', postController.getLatestsPosts);
 
-module.exports = router
+router.get('/:postId', postController.getOnePost);
+
+router.delete('/:postId', postController.deletePost);
+
+module.exports = router;

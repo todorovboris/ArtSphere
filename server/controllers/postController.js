@@ -1,25 +1,34 @@
 const { userModel, themeModel, postModel } = require('../models');
 
 function newPost(text, userId, themeId) {
-    return postModel.create({ text, userId, themeId })
-        .then(post => {
-            return Promise.all([
-                userModel.updateOne({ _id: userId }, { $push: { posts: post._id }, $addToSet: { themes: themeId } }),
-                themeModel.findByIdAndUpdate({ _id: themeId }, { $push: { posts: post._id }, $addToSet: { subscribers: userId } }, { new: true })
-            ])
-        })
+    return postModel.create({ text, userId, themeId }).then((post) => {
+        return Promise.all([
+            userModel.updateOne({ _id: userId }, { $push: { posts: post._id }, $addToSet: { themes: themeId } }),
+            themeModel.findByIdAndUpdate({ _id: themeId }, { $push: { posts: post._id }, $addToSet: { subscribers: userId } }, { new: true }),
+        ]);
+    });
 }
 
 function getLatestsPosts(req, res, next) {
     const limit = Number(req.query.limit) || 0;
 
-    postModel.find()
+    postModel
+        .find()
         .sort({ created_at: -1 })
         .limit(limit)
         .populate('themeId userId')
-        .then(posts => {
-            res.status(200).json(posts)
+        .then((posts) => {
+            res.status(200).json(posts);
         })
+        .catch(next);
+}
+
+function getOnePost(req, res, next) {
+    const { postId } = req.params;
+
+    postModel
+        .findById(postId)
+        .then((post) => res.json(post))
         .catch(next);
 }
 
@@ -39,12 +48,12 @@ function editPost(req, res, next) {
     const { _id: userId } = req.user;
 
     // if the userId is not the same as this one of the post, the post will not be updated
-    postModel.findOneAndUpdate({ _id: postId, userId }, { text: postText }, { new: true })
-        .then(updatedPost => {
+    postModel
+        .findOneAndUpdate({ _id: postId, userId }, { text: postText }, { new: true })
+        .then((updatedPost) => {
             if (updatedPost) {
                 res.status(200).json(updatedPost);
-            }
-            else {
+            } else {
                 res.status(401).json({ message: `Not allowed!` });
             }
         })
@@ -62,7 +71,7 @@ function deletePost(req, res, next) {
     ])
         .then(([deletedOne, _, __]) => {
             if (deletedOne) {
-                res.status(200).json(deletedOne)
+                res.status(200).json(deletedOne);
             } else {
                 res.status(401).json({ message: `Not allowed!` });
             }
@@ -74,11 +83,12 @@ function like(req, res, next) {
     const { postId } = req.params;
     const { _id: userId } = req.user;
 
-    console.log('like')
+    console.log('like');
 
-    postModel.updateOne({ _id: postId }, { $addToSet: { likes: userId } }, { new: true })
+    postModel
+        .updateOne({ _id: postId }, { $addToSet: { likes: userId } }, { new: true })
         .then(() => res.status(200).json({ message: 'Liked successful!' }))
-        .catch(next)
+        .catch(next);
 }
 
 module.exports = {
@@ -88,4 +98,5 @@ module.exports = {
     editPost,
     deletePost,
     like,
-}
+    getOnePost,
+};
