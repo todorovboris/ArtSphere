@@ -73,4 +73,11 @@ export class AuthService {
 
     return false;
   }
+
+  logout(): void {
+    this._currentUser.set(null);
+    this._isLoggedIn.set(false);
+
+    localStorage.removeItem('currentUser');
+  }
 }

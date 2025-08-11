@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../../../services';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +16,7 @@ export class HeaderComponent {
   readonly currentUser = this.authService.currentUser;
 
   logout(): void {
-    // this.authService.
+    this.authService.logout();
+    this.router.navigate(['/home']);
   }
 }

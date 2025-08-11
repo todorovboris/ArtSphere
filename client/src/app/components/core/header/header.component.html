@@ -4,7 +4,7 @@
       <img src="logo.png" alt="ArtSphere Logo" />
     </a>
 
-    @if (!isLoggedIn) {
+    @if (!isLoggedIn()) {
     <ul class="guest">
       <li><a routerLink="/gallery">Galery</a></li>
       <li><a routerLink="/login">Login</a></li>
@@ -15,7 +15,7 @@
       <li><a routerLink="/gallery">Galery</a></li>
       <li><a routerLink="/my-creations">My Works</a></li>
       <li><a routerLink="/creations/upload">Upload</a></li>
-      <li><a routerLink="/logout">Logout</a></li>
+      <li><a routerLink="#" (click)="logout()">Logout</a></li>
     </ul>
     }
   </nav>
