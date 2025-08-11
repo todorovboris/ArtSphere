@@ -9,6 +9,6 @@ router.get('/', postController.getLatestsPosts);
 
 router.get('/:postId', postController.getOnePost);
 
-router.delete('/:postId', postController.deleteOnePost);
+router.delete('/:postId', auth(), postController.deleteOnePost);
 
 module.exports = router;
