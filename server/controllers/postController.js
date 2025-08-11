@@ -9,6 +9,16 @@ function newPost(text, userId, themeId) {
     });
 }
 
+function createPost(req, res, next) {
+    const { themeId } = req.params;
+    const { _id: userId } = req.user;
+    const { postText } = req.body;
+
+    newPost(postText, userId, themeId)
+        .then(([_, updatedTheme]) => res.status(200).json(updatedTheme))
+        .catch(next);
+}
+
 function getLatestsPosts(req, res, next) {
     const limit = Number(req.query.limit) || 0;
 
@@ -29,16 +39,6 @@ function getOnePost(req, res, next) {
     postModel
         .findById(postId)
         .then((post) => res.json(post))
-        .catch(next);
-}
-
-function createPost(req, res, next) {
-    const { themeId } = req.params;
-    const { _id: userId } = req.user;
-    const { postText } = req.body;
-
-    newPost(postText, userId, themeId)
-        .then(([_, updatedTheme]) => res.status(200).json(updatedTheme))
         .catch(next);
 }
 
@@ -79,6 +79,25 @@ function deletePost(req, res, next) {
         .catch(next);
 }
 
+function deleteOnePost(req, res, next) {
+    const { postId, themeId } = req.params;
+    const { _id: userId } = req.user;
+
+    Promise.all([
+        postModel.findOneAndDelete({ _id: postId, userId }),
+        // userModel.findOneAndUpdate({ _id: userId }, { $pull: { posts: postId } }),
+        // themeModel.findOneAndUpdate({ _id: themeId }, { $pull: { posts: postId } }),
+    ])
+        .then(([deletedOne, _, __]) => {
+            if (deletedOne) {
+                res.status(200).json(deletedOne);
+            } else {
+                res.status(401).json({ message: `Not allowed!` });
+            }
+        })
+        .catch(next);
+}
+
 function like(req, res, next) {
     const { postId } = req.params;
     const { _id: userId } = req.user;
@@ -99,4 +118,5 @@ module.exports = {
     deletePost,
     like,
     getOnePost,
+    deleteOnePost,
 };
