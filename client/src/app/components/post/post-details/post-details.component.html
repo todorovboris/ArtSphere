@@ -1,0 +1,31 @@
+@if (post) {
+<section class="details-page">
+  <div class="details-container">
+    <div class="image-container">
+      <img [src]="post.imageUrl" [alt]="post.title" class="main-image" />
+    </div>
+    <div class="content-container">
+      <h1>{{ post.title }}</h1>
+      <p class="author">
+        by {{ post.author || post.userId.username }}
+        <!-- <a [routerLink]="['/user', post.userId._id]">{{
+          post.userId.username
+        }}</a> -->
+      </p>
+      <div class="details-text">
+        <p>{{ post.text }}</p>
+      </div>
+      <div class="details-footer">
+        <span class="likes-count">{{ post.likes.length }} likes</span>
+        <button class="like-button">
+          <i class="fas fa-heart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+} @else {
+<div class="loading-container">
+  <p>Loading post details...</p>
+</div>
+}

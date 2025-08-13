@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { PostDetailsComponent } from './components/post/post-details/post-details.component';
 
 export const routes: Routes = [
   {
@@ -31,5 +32,9 @@ export const routes: Routes = [
       import('./components/post/posts-catalog/posts-catalog.component').then(
         (c) => c.PostsCatalogComponent
       ),
+  },
+  {
+    path: 'gallery/:id',
+    component: PostDetailsComponent,
   },
 ];

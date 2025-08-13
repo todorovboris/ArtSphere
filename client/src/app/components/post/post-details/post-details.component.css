@@ -1,0 +1,87 @@
+.details-page {
+  padding: 80px 2rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 900px;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.image-container {
+  width: 100%;
+}
+
+.main-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+.content-container {
+  padding: 2rem;
+}
+
+.content-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.author a {
+  font-size: 1.2rem;
+  color: #f97316;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.author a:hover {
+  text-decoration: underline;
+}
+
+.details-text {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+.details-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.likes-count {
+  font-size: 1.2rem;
+  color: #555;
+  font-weight: bold;
+}
+
+.like-button {
+  background-color: transparent;
+  border: none;
+  color: #f97316;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.loading-container {
+  padding-top: 80px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #666;
+}

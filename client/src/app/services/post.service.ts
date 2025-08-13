@@ -19,6 +19,10 @@ export class PostService {
     return this.http.get<Post[]>(this.apiUrl);
   }
 
+  getOnePost(postId: string): Observable<Post> {
+    return this.http.get<Post>(`${this.apiUrl}/${postId}`);
+  }
+
   createPost(themeName: string, postText: string): Observable<Post> {
     const body = JSON.stringify({ themeName, postText });
     return this.http.post<Post>(this.apiUrl, body, {

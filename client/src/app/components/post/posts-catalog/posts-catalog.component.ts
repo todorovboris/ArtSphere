@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-posts-catalog',
-  imports: [RouterLink, CommonModule],
+  imports: [RouterLink],
   templateUrl: './posts-catalog.component.html',
   styleUrl: './posts-catalog.component.css',
 })
