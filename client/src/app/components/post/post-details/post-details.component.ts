@@ -33,7 +33,5 @@ export class PostDetailsComponent implements OnInit {
         });
       }
     });
-
-    console.log('Post:', this.post);
   }
 }
