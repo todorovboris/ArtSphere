@@ -14,6 +14,7 @@
   </div>
 </section>
 
+@if (!isLoggedIn()) {
 <section class="join-community">
   <div class="join-content">
     <h3>Join the ArtSphere Community!</h3>
@@ -21,3 +22,4 @@
     <a routerLink="/register" class="btn primary">Register Now</a>
   </div>
 </section>
+}
