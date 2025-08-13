@@ -25,4 +25,11 @@ export const routes: Routes = [
         (c) => c.LoginComponent
       ),
   },
+  {
+    path: 'gallery',
+    loadComponent: () =>
+      import('./components/post/posts-catalog/posts-catalog.component').then(
+        (c) => c.PostsCatalogComponent
+      ),
+  },
 ];
