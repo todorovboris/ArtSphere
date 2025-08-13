@@ -1,0 +1,25 @@
+<section class="gallery-page">
+  <h2>Gallery</h2>
+
+  @if (posts.length > 0) {
+  <div class="posts-grid">
+    @for (post of posts; track post._id) {
+    <div class="post-card">
+      <a [routerLink]="['/gallery', post._id]">
+        <img [src]="post.imageUrl" [alt]="post.title" class="post-image" />
+        <div class="card-overlay">
+          <h3>{{ post.title }}</h3>
+          <p>by {{ post.author || post.userId.username }}</p>
+        </div>
+      </a>
+    </div>
+    }
+  </div>
+  } @else {
+  <ng-template>
+    <p class="no-posts-message">
+      No creations found yet. Be the first to upload!
+    </p>
+  </ng-template>
+  }
+</section>
