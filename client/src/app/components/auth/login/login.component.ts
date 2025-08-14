@@ -16,16 +16,19 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  onLogin(form: NgForm): void {
-    if (form.invalid) return;
+  onLogin(loginForm: NgForm): void {
+    if (loginForm.invalid) return;
 
-    const { email, password } = form.value;
+    const { email, password } = loginForm.value;
     this.email = email;
     this.password = password;
 
-    const response = this.authService.login(this.email, this.password);
-    if (response === true) {
-      this.router.navigate(['/home']);
-    }
+    this.authService.login(this.email, this.password);
+    this.router.navigate(['/home']);
+
+    // const response = this.authService.login(this.email, this.password);
+    // if (response === true) {
+    //   this.router.navigate(['/home']);
+    // }
   }
 }

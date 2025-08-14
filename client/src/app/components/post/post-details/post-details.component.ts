@@ -24,7 +24,7 @@ export class PostDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentUser = this.authService.currentUser();
+    // this.currentUser = this.authService.currentUser();
 
     this.route.paramMap.subscribe((params) => {
       const postId = params.get('id');
@@ -46,7 +46,7 @@ export class PostDetailsComponent implements OnInit {
 
   checkIsLiked(): void {
     if (this.post && this.currentUser) {
-      const isLiked = this.post.likes.includes(this.currentUser._id);
+      const isLiked = this.post.likes.includes(this.currentUser.uid);
       this.isLiked = isLiked;
     } else {
       this.isLiked = false;
@@ -54,7 +54,7 @@ export class PostDetailsComponent implements OnInit {
   }
 
   checkIfOwner(): void {
-    this.isOwner = this.post?.userId === this.currentUser?._id;
+    this.isOwner = this.post?.userId === this.currentUser?.uid;
   }
 
   onLike(): void {
