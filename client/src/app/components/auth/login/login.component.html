@@ -1,22 +1,25 @@
 <section class="auth-section">
-  <form class="auth-form" (ngSubmit)="onLogin()" method="post">
+  <form class="auth-form" #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
     <h2>Login</h2>
+
     <div class="form-group">
       <label for="email">Email</label>
       <input
         type="email"
         id="email"
         name="email"
-        ngModel
         required
         email
+        ngModel
         #emailInput="ngModel"
-        [(ngModel)]="email"
-        (blur)="validateEmail()"
       />
-      @if (emailError) {
+      @if (emailInput.errors?.['required'] && emailInput.touched) {
       <div class="error-message">
-        <div>{{ emailErrorMessage }}</div>
+        <div>Email is required!</div>
+      </div>
+      } @else if (emailInput.errors?.['email'] && emailInput.touched) {
+      <div class="error-message">
+        <div>Email is NOT Valid!</div>
       </div>
       }
     </div>
@@ -29,18 +32,18 @@
         name="password"
         ngModel
         required
+        minlength="4"
         #passwordInput="ngModel"
-        [(ngModel)]="password"
-        (blur)="validatePassword()"
       />
-      @if (passwordError) {
-      <div class="error-message">
-        <div>{{ passwordErrorMessage }}</div>
-      </div>
+      @if (passwordInput.errors?.['required'] && passwordInput.touched) {
+      <div class="error-message">Password is required!</div>
+      } @else if (passwordInput.errors?.['minlength'] && passwordInput.touched)
+      {
+      <div class="error-message">Password must be at least 4 characters!</div>
       }
     </div>
 
-    <button type="submit" [disabled]="!isFormValid">Login</button>
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
 
     <p>Don't have an account? <a routerLink="/register">Register here</a></p>
   </form>

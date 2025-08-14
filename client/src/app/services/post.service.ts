@@ -25,6 +25,7 @@ export class PostService {
 
   createPost(themeName: string, postText: string): Observable<Post> {
     const body = JSON.stringify({ themeName, postText });
+
     return this.http.post<Post>(this.apiUrl, body, {
       headers: {
         'Content-Type': 'application/json',
