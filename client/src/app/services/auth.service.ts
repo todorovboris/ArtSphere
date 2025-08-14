@@ -1,83 +1,46 @@
 import { Injectable, signal } from '@angular/core';
-import { User } from '../types';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  User,
+} from '@angular/fire/auth';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authUrl = 'http://localhost:3000/api';
   private _currentUser = signal<User | null>(null);
   private _isLoggedIn = signal<boolean>(false);
-  private _users: User[] = [
-    {
-      _id: '5fa64b162183ce1728ff371d',
-      username: 'John',
-      email: 'john.doe@gmail.com',
-    },
-    {
-      _id: '5fa64b162183ce1728ff371e',
-      username: 'Jane',
-      email: 'jane.fox@gmail.com',
-    },
-    {
-      _id: '5fa64b162183ce1728ff371f',
-      username: 'David',
-      email: 'david.gilmore@gmail.com',
-    },
-  ];
 
   public isLoggedIn = this._isLoggedIn.asReadonly();
   public currentUser = this._currentUser.asReadonly();
 
-  constructor(private http: HttpClient) {
-    const loggedUser = localStorage.getItem('currentUser');
-    if (loggedUser) {
-      const user = JSON.parse(loggedUser);
-      this._currentUser.set(user);
-      this._isLoggedIn.set(true);
-    }
+  constructor(private auth: Auth) {
+    this.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this._currentUser.set(user);
+        this._isLoggedIn.set(true);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+      } else {
+        this._currentUser.set(null);
+        this._isLoggedIn.set(false);
+        localStorage.removeItem('currentUser');
+      }
+    });
   }
 
-  register(username: string, email: string, password: string): boolean {
-    if (username && email && password) {
-      const newUser: User = {
-        _id: `user_${Date.now()}`,
-        username: username,
-        email: email,
-      };
-
-      this._users.push(newUser);
-      this._isLoggedIn.set(true);
-      this._currentUser.set(newUser);
-
-      localStorage.setItem('currentUser', JSON.stringify(newUser));
-
-      return true;
-    }
-
-    return false;
+  register(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
   login(email: string, password: string) {
-    if (email && password) {
-      const user = this._users[0];
-      this._isLoggedIn.set(true);
-      this._currentUser.set(user);
-
-      localStorage.setItem('currentUser', JSON.stringify(user));
-
-      return true;
-    }
-
-    return false;
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  logout(): void {
-    this._currentUser.set(null);
-    this._isLoggedIn.set(false);
-
-    localStorage.removeItem('currentUser');
+  logout() {
+    return signOut(this.auth);
   }
 }
