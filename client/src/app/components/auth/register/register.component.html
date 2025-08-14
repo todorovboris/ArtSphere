@@ -1,26 +1,10 @@
 <section class="auth-section">
-  <form class="auth-form" (ngSubmit)="onRegister()" #registerForm="ngForm">
+  <form
+    class="auth-form"
+    #registerForm="ngForm"
+    (ngSubmit)="onRegister(registerForm)"
+  >
     <h2>Register</h2>
-
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        ngModel
-        required
-        minlength="3"
-        #usernameInput="ngModel"
-        [(ngModel)]="username"
-        (blur)="validateUsername()"
-      />
-      @if (usernameError) {
-      <div class="error-message">
-        <div>{{ usernameErrorMessage }}</div>
-      </div>
-      }
-    </div>
 
     <div class="form-group">
       <label for="email">Email</label>
@@ -32,12 +16,14 @@
         required
         email
         #emailInput="ngModel"
-        [(ngModel)]="email"
-        (blur)="validateEmail()"
       />
-      @if (emailError) {
+      @if (emailInput.errors?.['required'] && emailInput.touched) {
       <div class="error-message">
-        <div>{{ emailErrorMessage }}</div>
+        <div>Email is required!</div>
+      </div>
+      } @else if (emailInput.errors?.['email'] && emailInput.touched) {
+      <div class="error-message">
+        <div>Email is NOT Valid!</div>
       </div>
       }
     </div>
@@ -50,15 +36,14 @@
         name="password"
         ngModel
         required
-        minlength="6"
+        minlength="4"
         #passwordInput="ngModel"
-        [(ngModel)]="password"
-        (blur)="validatePassword()"
       />
-      @if (passwordError) {
-      <div class="error-message">
-        <div>{{ passwordErrorMessage }}</div>
-      </div>
+      @if (passwordInput.errors?.['required'] && passwordInput.touched) {
+      <div class="error-message">Password is required!</div>
+      } @else if (passwordInput.errors?.['minlength'] && passwordInput.touched)
+      {
+      <div class="error-message">Password must be at least 4 characters!</div>
       }
     </div>
 
@@ -70,19 +55,17 @@
         name="rePassword"
         ngModel
         required
-        minlength="6"
+        minlength="4"
         #rePasswordInput="ngModel"
-        [(ngModel)]="rePassword"
-        (blur)="validateRePassword()"
       />
-      @if (rePasswordError) {
-      <div class="error-message">
-        <div>{{ rePasswordErrorMessage }}</div>
-      </div>
+      @if (rePasswordInput.errors?.['required'] && rePasswordInput.touched) {
+      <div class="error-message">Re-Password is required!</div>
+      } @else if (passwordsDoNotMatch) {
+      <div class="error-message">Passwords do not match!</div>
       }
     </div>
 
-    <button type="submit" [disabled]="!isFormValid">Register</button>
+    <button type="submit" [disabled]="registerForm.invalid">Register</button>
     <p>Already have an account? <a routerLink="/login">Login here</a></p>
   </form>
 </section>

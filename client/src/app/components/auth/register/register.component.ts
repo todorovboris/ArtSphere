@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services';
 
@@ -13,98 +13,28 @@ export class RegisterComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  username: string = '';
   email: string = '';
   password: string = '';
   rePassword: string = '';
+  passwordsDoNotMatch: boolean = false;
 
-  usernameError: boolean = false;
-  emailError: boolean = false;
-  passwordError: boolean = false;
-  rePasswordError: boolean = false;
+  onRegister(registerForm: NgForm): void {
+    if (registerForm.invalid) return;
 
-  usernameErrorMessage: string = '';
-  emailErrorMessage: string = '';
-  passwordErrorMessage: string = '';
-  rePasswordErrorMessage: string = '';
+    const { email, password, rePassword } = registerForm.value;
 
-  private isValidEmail(email: string): boolean {
-    const emailRegEx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegEx.test(email);
-  }
-
-  validateUsername(): void {
-    if (!this.username) {
-      this.usernameError = true;
-      this.usernameErrorMessage = 'Username is required!';
-    } else {
-      this.usernameError = false;
-      this.usernameErrorMessage = '';
+    if (password !== rePassword) {
+      this.passwordsDoNotMatch = true;
+      return;
     }
-  }
 
-  validateEmail(): void {
-    if (!this.email) {
-      this.emailError = true;
-      this.emailErrorMessage = 'Email is requried!';
-    }
-  }
+    this.passwordsDoNotMatch = false;
 
-  validatePassword(): void {
-    if (!this.password) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'Password is required!';
-    } else if (this.password.length < 6) {
-      this.passwordError = true;
-      this.passwordErrorMessage = 'Password must be at least 6 characters!';
-    } else {
-      this.passwordError = false;
-      this.passwordErrorMessage = '';
-    }
-  }
+    this.email = email;
+    this.password = password;
+    this.rePassword = rePassword;
 
-  validateRePassword(): void {
-    if (!this.rePassword) {
-      this.rePasswordError = true;
-      this.rePasswordErrorMessage = 'Repeat Password is required!';
-    } else if (this.rePassword !== this.password) {
-      this.rePasswordError = true;
-      this.rePasswordErrorMessage = 'Both passwords do not match!';
-    } else {
-      this.rePasswordError = false;
-      this.rePasswordErrorMessage = '';
-    }
-  }
-
-  isFormValid(): boolean {
-    return (
-      Boolean(this.username) &&
-      Boolean(this.email) &&
-      Boolean(this.password) &&
-      Boolean(this.rePassword) &&
-      !this.usernameError &&
-      !this.emailError &&
-      !this.passwordError &&
-      !this.rePasswordError
-    );
-  }
-
-  onRegister(): void {
-    this.validateUsername();
-    this.validateEmail();
-    this.validatePassword();
-    this.validateRePassword();
-
-    if (this.isFormValid()) {
-      const response = this.authService.register(
-        this.username,
-        this.email,
-        this.password
-      );
-
-      if (response === true) {
-        this.router.navigate(['/home']);
-      }
-    }
+    this.authService.register(this.email, this.password);
+    this.router.navigate(['/home']);
   }
 }
