@@ -1,13 +1,11 @@
 import { User } from './user';
 
 export interface Post {
-  _id: string;
-  userId: User;
-  imageUrl: string;
+  id: string;
   title: string;
   author: string;
-  createdAt: string;
-  updatedAt: string;
+  info: string;
+  imageUrl: string;
+  userId: User;
   likes: string[];
-  text: string;
 }
