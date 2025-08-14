@@ -3,9 +3,9 @@
 
   @if (posts.length > 0) {
   <div class="posts-grid">
-    @for (post of posts; track post._id) {
+    @for (post of posts; track post.id) {
     <div class="post-card">
-      <a [routerLink]="['/gallery', post._id]">
+      <a [routerLink]="['/gallery', post.id]">
         <img [src]="post.imageUrl" [alt]="post.title" class="post-image" />
         <div class="card-overlay">
           <h3>{{ post.title }}</h3>

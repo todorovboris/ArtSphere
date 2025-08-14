@@ -12,19 +12,16 @@ import { CommonModule } from '@angular/common';
 })
 export class PostsCatalogComponent implements OnInit {
   posts: Post[] = [];
-  // isLoading: boolean = true;
 
   private postService = inject(PostService);
 
   ngOnInit(): void {
-    this.postService.getAllPosts().subscribe({
+    this.postService.getPosts().subscribe({
       next: (posts) => {
         this.posts = posts;
-        // this.isLoading = false;
       },
       error: (error) => {
         console.error('Error fetching posts:', error);
-        // this.isLoading = false;
       },
     });
   }

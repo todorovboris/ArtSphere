@@ -30,11 +30,11 @@ export class PostDetailsComponent implements OnInit {
       const postId = params.get('id');
 
       if (postId) {
-        this.postService.getOnePost(postId).subscribe({
+        this.postService.getPost(postId).subscribe({
           next: (post) => {
-            this.post = post;
-            this.checkIfOwner();
-            this.checkIsLiked();
+            this.post = post as Post;
+            // this.checkIfOwner();
+            // this.checkIsLiked();
           },
           error: (error) => {
             console.error('Error fetching post details:', error);
