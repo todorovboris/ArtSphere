@@ -40,7 +40,7 @@ export class PostDetailsComponent implements OnInit {
       const postId = params.get('id');
 
       if (postId) {
-        this.postService.getPost(postId).subscribe({
+        this.postService.getOnePost(postId).subscribe({
           next: (post) => {
             this.post = post as Post;
             this.checkIfOwner();
@@ -64,7 +64,7 @@ export class PostDetailsComponent implements OnInit {
   }
 
   checkIfOwner(): void {
-    this.isOwner = this.post?.userId === this.currentUser?.uid;
+    this.isOwner = this.post?.ownerId === this.currentUser?.uid;
   }
 
   onLike(): void {

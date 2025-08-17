@@ -16,7 +16,7 @@ export class PostsCatalogComponent implements OnInit {
   private postService = inject(PostService);
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe({
+    this.postService.getAllPosts().subscribe({
       next: (posts) => {
         this.posts = posts;
       },
