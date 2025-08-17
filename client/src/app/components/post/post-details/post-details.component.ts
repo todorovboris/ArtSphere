@@ -1,8 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Post, User } from '../../../types';
 import { AuthService, PostService } from '../../../services';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-post-details',
@@ -17,15 +16,16 @@ export class PostDetailsComponent implements OnInit {
   post: Post | null = null;
 
   protected authService = inject(AuthService);
+  private postService = inject(PostService);
+  private route = inject(ActivatedRoute);
 
-  constructor(
-    private postService: PostService,
-    private route: ActivatedRoute
-  ) {}
+  constructor() {
+    effect(() => {
+      this.currentUser = this.authService.currentUser();
+    });
+  }
 
   ngOnInit(): void {
-    // this.currentUser = this.authService.currentUser();
-
     this.route.paramMap.subscribe((params) => {
       const postId = params.get('id');
 
@@ -33,8 +33,8 @@ export class PostDetailsComponent implements OnInit {
         this.postService.getPost(postId).subscribe({
           next: (post) => {
             this.post = post as Post;
-            // this.checkIfOwner();
-            // this.checkIsLiked();
+            this.checkIfOwner();
+            this.checkIsLiked();
           },
           error: (error) => {
             console.error('Error fetching post details:', error);

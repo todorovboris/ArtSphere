@@ -6,7 +6,6 @@ import {
   signOut,
   User,
 } from '@angular/fire/auth';
-import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

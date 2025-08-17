@@ -9,7 +9,7 @@
         <img [src]="post.imageUrl" [alt]="post.title" class="post-image" />
         <div class="card-overlay">
           <h3>{{ post.title }}</h3>
-          <p>by {{ post.author || post.userId.username }}</p>
+          <p>by {{ post.author || post.userId.email }}</p>
         </div>
       </a>
     </div>

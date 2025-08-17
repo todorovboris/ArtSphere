@@ -9,20 +9,21 @@ import {
   docData,
   Firestore,
 } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
-  private apiUrl = 'http://localhost:3000/api/posts';
+  // private apiUrl = 'http://localhost:3000/api/posts';
 
   private firestore = inject(Firestore);
 
   constructor(private http: HttpClient) {}
 
   getPosts(): Observable<Post[]> {
-    const itemsRef = collection(this.firestore, 'posts');
-    return collectionData(itemsRef, { idField: 'id' }) as Observable<Post[]>;
+    const postsRef = collection(this.firestore, 'posts');
+    return collectionData(postsRef, { idField: 'id' }) as Observable<Post[]>;
   }
 
   getPost(postId: string) {
@@ -34,21 +35,18 @@ export class PostService {
   //   if (limit) {
   //     this.apiUrl += `?limit=${limit}`;
   //   }
-
   //   return this.http.get<Post[]>(this.apiUrl);
   // }
-
   // getOnePost(postId: string): Observable<Post> {
   //   return this.http.get<Post>(`${this.apiUrl}/${postId}`);
   // }
 
-  createPost(themeName: string, postText: string): Observable<Post> {
-    const body = JSON.stringify({ themeName, postText });
-
-    return this.http.post<Post>(this.apiUrl, body, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-  }
+  // createPost(themeName: string, postText: string): Observable<Post> {
+  //   const body = JSON.stringify({ themeName, postText });
+  //   return this.http.post<Post>(this.apiUrl, body, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  // }
 }
