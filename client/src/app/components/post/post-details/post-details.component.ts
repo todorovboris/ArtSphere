@@ -2,6 +2,13 @@ import { Component, effect, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Post, User } from '../../../types';
 import { AuthService, PostService } from '../../../services';
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-post-details',
@@ -18,10 +25,13 @@ export class PostDetailsComponent implements OnInit {
   protected authService = inject(AuthService);
   private postService = inject(PostService);
   private route = inject(ActivatedRoute);
+  private firestore = inject(Firestore);
 
   constructor() {
     effect(() => {
       this.currentUser = this.authService.currentUser();
+      this.checkIfOwner();
+      this.checkIsLiked();
     });
   }
 
@@ -58,6 +68,37 @@ export class PostDetailsComponent implements OnInit {
   }
 
   onLike(): void {
-    console.log('its liked!');
+    const currentUserId = this.authService.currentUser()?.uid;
+
+    if (!currentUserId || !this.post) {
+      console.error('User not logged in or post not found!');
+      return;
+    }
+
+    const postId = this.post.id;
+    const postRef = doc(this.firestore, `posts/${postId}`);
+    let updateOperation;
+
+    if (!this.isLiked) {
+      updateOperation = updateDoc(postRef, {
+        likes: arrayUnion(currentUserId),
+      });
+    }
+
+    updateOperation
+      ?.then(() => {
+        if (this.isLiked) {
+          this.post!.likes = this.post!.likes.filter(
+            (uid) => uid !== currentUserId
+          );
+          this.isLiked = false;
+        } else {
+          this.post!.likes.push(currentUserId);
+          this.isLiked = true;
+        }
+      })
+      .catch((error) => {
+        console.error('Error updating like status:', error);
+      });
   }
 }
