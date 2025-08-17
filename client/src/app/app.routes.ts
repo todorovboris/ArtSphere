@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { PostDetailsComponent } from './components/post/post-details/post-details.component';
 import { authGuard } from './guards/auth.guard';
+import { publicGuard } from './guards/public.guard';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,7 @@ export const routes: Routes = [
       import('./components/auth/register/register.component').then(
         (c) => c.RegisterComponent
       ),
+    canActivate: [publicGuard],
   },
   {
     path: 'login',
@@ -26,6 +28,7 @@ export const routes: Routes = [
       import('./components/auth/login/login.component').then(
         (c) => c.LoginComponent
       ),
+    canActivate: [publicGuard],
   },
   {
     path: 'gallery',

@@ -40,6 +40,7 @@ export class AuthService {
   }
 
   logout() {
+    this._isLoggedIn.set(false);
     return signOut(this.auth);
   }
 }
