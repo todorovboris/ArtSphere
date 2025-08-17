@@ -95,3 +95,15 @@ a:hover {
   margin-top: 1rem;
   font-weight: bold;
 }
+
+.server-error-message {
+  font-size: 0.95rem;
+  color: #c42b2b; /* По-тъмен нюанс на червеното */
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border: 1px solid #ff4d4d;
+  background-color: #ffe6e6; /* Светлочервен фон */
+  border-radius: 5px;
+  text-align: center;
+}

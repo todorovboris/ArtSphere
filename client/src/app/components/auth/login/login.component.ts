@@ -15,20 +15,40 @@ export class LoginComponent {
 
   email: string = '';
   password: string = '';
+  errorMessage: string = '';
 
   onLogin(loginForm: NgForm): void {
+    this.errorMessage = '';
+
     if (loginForm.invalid) return;
 
     const { email, password } = loginForm.value;
     this.email = email;
     this.password = password;
 
-    this.authService.login(this.email, this.password);
-    this.router.navigate(['/home']);
-
-    // const response = this.authService.login(this.email, this.password);
-    // if (response === true) {
-    //   this.router.navigate(['/home']);
-    // }
+    this.authService
+      .login(this.email, this.password)
+      .then(() => {
+        this.router.navigate(['/home']);
+      })
+      .catch((error) => {
+        switch (error.code) {
+          case 'auth/invalid-email':
+            this.errorMessage = 'Email is not valid!';
+            break;
+          case 'auth/user-not-found':
+            this.errorMessage = 'Wrong user!';
+            break;
+          case 'auth/wrong-password':
+            this.errorMessage = 'Wrong password!';
+            break;
+          case 'auth/invalid-credential':
+            this.errorMessage = 'Email or password is not correct!';
+            break;
+          default:
+            this.errorMessage = 'Error on Login. Please try again later!';
+            break;
+        }
+      });
   }
 }
