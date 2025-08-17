@@ -1,0 +1,47 @@
+<section class="form-container">
+  <form #postForm="ngForm" (ngSubmit)="onCreatePost(postForm)">
+    <h2>Create a New Post</h2>
+
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" ngModel required />
+      @if ( postForm.controls['title'].invalid &&
+      postForm.controls['title'].touched) {
+      <div class="error-message">Title is required.</div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="author">Author</label>
+      <input type="text" id="author" name="author" ngModel />
+      <!-- @if (postForm.controls['author'].invalid &&
+      postForm.controls['author'].touched) {
+      <div class="error-message">A valid image URL is required.</div>
+      } -->
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">Image URL</label>
+      <input type="url" id="imageUrl" name="imageUrl" ngModel required />
+      @if (postForm.controls['imageUrl'].invalid &&
+      postForm.controls['imageUrl'].touched) {
+      <div class="error-message">A valid image URL is required.</div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="info">Description</label>
+      <textarea id="info" name="info" rows="5" ngModel required></textarea>
+      @if (postForm.controls['info'].invalid &&
+      postForm.controls['info'].touched) {
+      <div class="error-message">Description is required.</div>
+      }
+    </div>
+
+    <div class="button-group">
+      <button type="submit" [disabled]="postForm.invalid" class="btn primary">
+        Create Post
+      </button>
+    </div>
+  </form>
+</section>

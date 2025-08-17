@@ -37,4 +37,11 @@ export const routes: Routes = [
     path: 'gallery/:id',
     component: PostDetailsComponent,
   },
+  {
+    path: 'create',
+    loadComponent: () =>
+      import('./components/post/post-create/post-create.component').then(
+        (c) => c.PostCreateComponent
+      ),
+  },
 ];

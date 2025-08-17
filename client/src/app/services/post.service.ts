@@ -7,6 +7,8 @@ import {
   collectionData,
   doc,
   docData,
+  addDoc,
+  deleteDoc,
   Firestore,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
@@ -18,17 +20,39 @@ export class PostService {
   // private apiUrl = 'http://localhost:3000/api/posts';
 
   private firestore = inject(Firestore);
+  private authService = inject(AuthService);
 
-  constructor(private http: HttpClient) {}
-
-  getPosts(): Observable<Post[]> {
+  getAllPosts(): Observable<Post[]> {
     const postsRef = collection(this.firestore, 'posts');
     return collectionData(postsRef, { idField: 'id' }) as Observable<Post[]>;
   }
 
-  getPost(postId: string) {
+  getOnePost(postId: string) {
     const postRef = doc(this.firestore, `posts/${postId}`);
     return docData(postRef, { idField: 'id' });
+  }
+
+  createPost(postData: Partial<Post>): Promise<any> {
+    const postsRef = collection(this.firestore, 'posts');
+    const userId = this.authService.currentUser()?.uid;
+
+    if (!userId) {
+      return Promise.reject('User is not logged in!');
+    }
+
+    const newPost = {
+      ...postData,
+      ownerId: userId,
+      createdOn: new Date().toISOString(),
+      likes: [],
+    };
+
+    return addDoc(postsRef, newPost);
+  }
+
+  deletePost(postId: string): Promise<void> {
+    const postRef = doc(this.firestore, `posts/${postId}`);
+    return deleteDoc(postRef);
   }
 
   // getAllPosts(limit?: number): Observable<Post[]> {
