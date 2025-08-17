@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { PostDetailsComponent } from './components/post/post-details/post-details.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -43,5 +44,11 @@ export const routes: Routes = [
       import('./components/post/post-create/post-create.component').then(
         (c) => c.PostCreateComponent
       ),
+    canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    redirectTo: '/home',
+    pathMatch: 'full',
   },
 ];
