@@ -12,7 +12,7 @@ import { Firestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-post-details',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.css',
 })
@@ -100,5 +100,9 @@ export class PostDetailsComponent implements OnInit {
       .catch((error) => {
         console.error('Error updating like status:', error);
       });
+  }
+
+  onDelete(): void {
+    console.log('Item deleted!');
   }
 }
