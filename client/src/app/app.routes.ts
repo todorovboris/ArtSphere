@@ -47,6 +47,7 @@ export const routes: Routes = [
       import('./components/post/post-edit/post-edit.component').then(
         (c) => c.PostEditComponent
       ),
+    canActivate: [authGuard],
   },
   {
     path: 'create',
