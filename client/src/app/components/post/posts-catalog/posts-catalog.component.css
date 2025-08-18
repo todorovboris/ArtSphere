@@ -1,20 +1,31 @@
 .gallery-page {
   text-align: center;
   padding: 2rem;
-  padding-top: 80px;
-  position: relative;
-  z-index: 1;
+  padding-top: 250px;
+  /* position: relative;
+  z-index: 1; */
 }
 
 h2 {
   font-size: 3rem;
   margin-bottom: 2.5rem;
-  margin-top: 2.5rem;
-  color: #1a1a1a;
+  margin-top: 4.5rem;
+  color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
   position: relative;
   display: inline-block;
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  /* padding: 1.5rem 2rem; */
+  padding-top: 2rem;
+  /* padding-bottom: 0.5rem; */
+  width: 100%;
+  z-index: 10;
+  background-color: black;
 }
 
 h2::after {
@@ -25,7 +36,7 @@ h2::after {
   transform: translateX(-50%);
   width: 80px;
   height: 4px;
-  background-color: #f97316;
+  /* background-color: #f97316; */
   border-radius: 2px;
 }
 
