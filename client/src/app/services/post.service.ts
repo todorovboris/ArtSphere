@@ -9,6 +9,7 @@ import {
   docData,
   addDoc,
   deleteDoc,
+  updateDoc,
   Firestore,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
@@ -48,6 +49,11 @@ export class PostService {
     };
 
     return addDoc(postsRef, newPost);
+  }
+
+  editPost(postId: string, postData: Partial<Post>): Promise<void> {
+    const postDocRef = doc(this.firestore, `posts/${postId}`);
+    return updateDoc(postDocRef, postData);
   }
 
   deletePost(postId: string): Promise<void> {

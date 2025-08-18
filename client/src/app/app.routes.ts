@@ -42,6 +42,13 @@ export const routes: Routes = [
     component: PostDetailsComponent,
   },
   {
+    path: 'gallery/:id/edit',
+    loadComponent: () =>
+      import('./components/post/post-edit/post-edit.component').then(
+        (c) => c.PostEditComponent
+      ),
+  },
+  {
     path: 'create',
     loadComponent: () =>
       import('./components/post/post-create/post-create.component').then(
@@ -49,9 +56,9 @@ export const routes: Routes = [
       ),
     canActivate: [authGuard],
   },
-  {
-    path: '**',
-    redirectTo: '/home',
-    pathMatch: 'full',
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: '/home',
+  //   pathMatch: 'full',
+  // },
 ];
