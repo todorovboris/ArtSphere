@@ -32,22 +32,8 @@ export class LoginComponent {
         this.router.navigate(['/home']);
       })
       .catch((error) => {
-        switch (error.code) {
-          case 'auth/invalid-email':
-            this.errorMessage = 'Email is not valid!';
-            break;
-          case 'auth/user-not-found':
-            this.errorMessage = 'Wrong user!';
-            break;
-          case 'auth/wrong-password':
-            this.errorMessage = 'Wrong password!';
-            break;
-          case 'auth/invalid-credential':
-            this.errorMessage = 'Email or password is not correct!';
-            break;
-          default:
-            this.errorMessage = 'Error on Login. Please try again later!';
-            break;
+        if (error.code) {
+          this.errorMessage = 'Email or password is not correct!';
         }
       });
   }
