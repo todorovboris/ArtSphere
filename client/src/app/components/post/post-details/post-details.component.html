@@ -20,9 +20,8 @@
         <button class="like-button" (click)="onLike()">
           <i class="fas fa-heart"></i>
         </button>
-        }
+        } @if (isOwner) {
         <div class="action-buttons">
-          @if (isOwner) {
           <button
             class="btn secondary"
             [routerLink]="['/gallery', post.id, 'edit']"
@@ -30,8 +29,8 @@
             Edit
           </button>
           <button class="btn delete" (click)="onDelete()">Delete</button>
-          }
         </div>
+        }
       </div>
     </div>
   </div>
