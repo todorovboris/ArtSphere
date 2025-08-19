@@ -2,13 +2,7 @@ import { Component, effect, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Post, User } from '../../../types';
 import { AuthService, PostService } from '../../../services';
-import {
-  doc,
-  updateDoc,
-  arrayUnion,
-  arrayRemove,
-  deleteDoc,
-} from '@angular/fire/firestore';
+import { doc, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 
 @Component({
