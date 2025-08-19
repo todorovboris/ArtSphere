@@ -1,0 +1,29 @@
+<section class="profile-page">
+  @if (currentUser) {
+  <div class="profile-header">
+    <h2>
+      Profile <span class="email-info">{{ currentUser.email }}</span>
+    </h2>
+    <!-- <p class="email-info">{{ currentUser.email }}</p> -->
+  </div>
+  } @if (userPosts.length >0) {
+  <div class="user-posts-grid">
+    @for (post of userPosts; track post.id) {
+    <div class="post-card">
+      <a [routerLink]="['/gallery', post.id]">
+        <img [src]="post.imageUrl" [alt]="post.title" class="post-image" />
+        <div class="card-overlay">
+          <h3>{{ post.title }}</h3>
+          <!-- <p>{{ post.info }}</p> -->
+        </div>
+      </a>
+    </div>
+
+    }
+  </div>
+  } @else {
+  <ng-template>
+    <p class="no-posts-message">No posts found.</p>
+  </ng-template>
+  }
+</section>

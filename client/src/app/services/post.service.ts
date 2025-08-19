@@ -11,6 +11,8 @@ import {
   deleteDoc,
   updateDoc,
   Firestore,
+  query,
+  where,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 
@@ -59,6 +61,12 @@ export class PostService {
   deletePost(postId: string): Promise<void> {
     const postRef = doc(this.firestore, `posts/${postId}`);
     return deleteDoc(postRef);
+  }
+
+  getUserPosts(userId: string): Observable<Post[]> {
+    const postsRef = collection(this.firestore, 'posts');
+    const userPosts = query(postsRef, where('ownerId', '==', userId));
+    return collectionData(userPosts, { idField: 'id' }) as Observable<Post[]>;
   }
 
   // getAllPosts(limit?: number): Observable<Post[]> {
