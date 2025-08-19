@@ -8,9 +8,21 @@
 </section>
 
 <section class="featured-creations">
-  <h2>Top Rated</h2>
-  <div class="creations-grid">
-    <p>Loading the most popular creations...</p>
+  <h2>Top Rated Creations</h2>
+  <div class="posts-grid">
+    @for (post of topPosts; track post.id) {
+    <div class="post-card">
+      <a [routerLink]="['/gallery', post.id]">
+        <img [src]="post.imageUrl" [alt]="post.title" class="post-image" />
+        <div class="card-overlay">
+          <h3>{{ post.title }}</h3>
+          <p>by {{ post.author }}</p>
+          <h5>{{ post.likesCount }} Likes</h5>
+        </div>
+      </a>
+    </div>
+    }
+    <!-- <p>Loading the most popular creations...</p> -->
   </div>
 </section>
 

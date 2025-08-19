@@ -13,6 +13,8 @@ import {
   Firestore,
   query,
   where,
+  orderBy,
+  limit,
 } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 
@@ -67,6 +69,12 @@ export class PostService {
     const postsRef = collection(this.firestore, 'posts');
     const userPosts = query(postsRef, where('ownerId', '==', userId));
     return collectionData(userPosts, { idField: 'id' }) as Observable<Post[]>;
+  }
+
+  getMostRatedPosts(): Observable<Post[]> {
+    const postsRef = collection(this.firestore, 'posts');
+    const topPosts = query(postsRef, orderBy('likesCount', 'desc'), limit(3));
+    return collectionData(topPosts, { idField: 'id' }) as Observable<Post[]>;
   }
 
   // getAllPosts(limit?: number): Observable<Post[]> {
