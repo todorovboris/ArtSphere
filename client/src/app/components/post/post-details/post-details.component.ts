@@ -1,5 +1,5 @@
 import { Component, effect, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Post, User } from '../../../types';
 import { AuthService, PostService } from '../../../services';
 import {
@@ -7,6 +7,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
 
@@ -26,6 +27,7 @@ export class PostDetailsComponent implements OnInit {
   private postService = inject(PostService);
   private route = inject(ActivatedRoute);
   private firestore = inject(Firestore);
+  private router = inject(Router);
 
   constructor() {
     effect(() => {
@@ -77,32 +79,29 @@ export class PostDetailsComponent implements OnInit {
 
     const postId = this.post.id;
     const postRef = doc(this.firestore, `posts/${postId}`);
-    let updateOperation;
 
     if (!this.isLiked) {
-      updateOperation = updateDoc(postRef, {
+      updateDoc(postRef, {
         likes: arrayUnion(currentUserId),
       });
+      this.isLiked = true;
     }
-
-    updateOperation
-      ?.then(() => {
-        if (this.isLiked) {
-          this.post!.likes = this.post!.likes.filter(
-            (uid) => uid !== currentUserId
-          );
-          this.isLiked = false;
-        } else {
-          this.post!.likes.push(currentUserId);
-          this.isLiked = true;
-        }
-      })
-      .catch((error) => {
-        console.error('Error updating like status:', error);
-      });
   }
 
   onDelete(): void {
-    console.log('Item deleted!');
+    const postId = this.post?.id;
+
+    if (postId) {
+      this.postService
+        .deletePost(postId)
+        .then(() => {
+          this.router.navigate(['/home']);
+        })
+        .catch((error) => {
+          console.error('Error deleting the post:', error);
+        });
+    } else {
+      console.error('Post ID is missing!');
+    }
   }
 }
