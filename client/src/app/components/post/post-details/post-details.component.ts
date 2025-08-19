@@ -72,8 +72,13 @@ export class PostDetailsComponent implements OnInit {
   onLike(): void {
     const currentUserId = this.authService.currentUser()?.uid;
 
-    if (!currentUserId || !this.post) {
-      console.error('User not logged in or post not found!');
+    if (!currentUserId) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    if (!this.post) {
+      console.error('Post not found!');
       return;
     }
 
