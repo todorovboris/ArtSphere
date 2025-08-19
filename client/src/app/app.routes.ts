@@ -63,6 +63,7 @@ export const routes: Routes = [
       import('./components/user-profile/user-profile.component').then(
         (c) => c.UserProfileComponent
       ),
+    canActivate: [authGuard],
   },
   {
     path: '**',

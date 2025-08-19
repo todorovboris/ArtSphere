@@ -8,4 +8,5 @@ export interface Post {
   imageUrl: string;
   ownerId: User;
   likes: string[];
+  likesCount: number;
 }

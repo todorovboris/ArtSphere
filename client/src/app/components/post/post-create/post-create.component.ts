@@ -22,7 +22,7 @@ export class PostCreateComponent {
     }
 
     this.postService
-      .createPost(form.value)
+      .createPost({ ...form.value, likesCount: 0 })
       .then((response) => {
         this.router.navigate(['/gallery']);
         form.reset();
