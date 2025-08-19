@@ -29,10 +29,16 @@
 }
 
 .profile-header .email-info {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #555;
-  font-style: italic;
+  font-style: normal;
+  font-weight: lighter;
 }
+
+/* .email-info {
+  font-weight: lighter;
+  font-size: 0.5rem;
+} */
 
 .user-posts-grid {
   display: grid;
