@@ -4,10 +4,11 @@ import { Post, User } from '../../../types';
 import { AuthService, PostService } from '../../../services';
 import { doc, updateDoc, arrayUnion, increment } from '@angular/fire/firestore';
 import { Firestore } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-post-details',
-  imports: [RouterLink],
+  imports: [RouterLink, CommonModule],
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.css',
 })

@@ -9,4 +9,5 @@ export interface Post {
   ownerId: User;
   likes: string[];
   likesCount: number;
+  createdOn: Date;
 }
