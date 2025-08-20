@@ -3,7 +3,7 @@
 ## **Description**
 ArtSphere is a dynamic web gallery for artists to discover, create, and connect. Built with Angular and powered by Firebase, the application allows users to register, log in, share their artwork, and interact with the community.
 
-Hosting URL: https://eventify-455612.web.app
+Hosting URL: https://artsphere-90a40.web.app/home
 
 ---
 
