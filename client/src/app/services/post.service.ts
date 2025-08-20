@@ -50,6 +50,7 @@ export class PostService {
       ownerId: userId,
       createdOn: new Date().toISOString(),
       likes: [],
+      likesCount: 0,
     };
 
     return addDoc(postsRef, newPost);
