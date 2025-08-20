@@ -29,5 +29,5 @@ Hosting URL: https://artsphere-90a40.web.app/home
 
 ## **Other**
 This app could be tested with the following user:
-1) test@abv.bg, pass: 123123
+- test@abv.bg, pass: 123123
 
