@@ -3,6 +3,7 @@ import { AuthService, PostService } from '../../services';
 import { Post, User } from '../../types';
 import { RouterLink } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { catchError, finalize, of, take } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -35,13 +36,20 @@ export class UserProfileComponent implements OnInit {
   }
 
   loadUserPosts(userId: string): void {
-    this.postService.getUserPosts(userId).subscribe({
-      next: (posts) => {
-        this.userPosts = posts;
-      },
-      error: (error) => {
-        console.error('Error fetching user posts:', error);
-      },
-    });
+    this.postService
+      .getUserPosts(userId)
+      .pipe(
+        take(1),
+        catchError((error) => {
+          console.error('Error fetching user posts:', error);
+          this.userPosts = [];
+          return of([]);
+        })
+      )
+      .subscribe({
+        next: (posts) => {
+          this.userPosts = posts;
+        },
+      });
   }
 }
