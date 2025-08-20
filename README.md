@@ -14,7 +14,6 @@ Hosting URL: https://artsphere-90a40.web.app/home
 - **Interactive Likes:** Users can "like" posts, with a real-time counter for each art piece.
 - **User Profile:** A dedicated page for each user to view all of their created posts.
 - **Top Rated:** The home page dynamically displays the three most-liked posts, providing a quick look at the community's favorites.
-- **Responsive Design:** The application is designed to provide a seamless experience on both desktop and mobile devices.
 
 ---
 
