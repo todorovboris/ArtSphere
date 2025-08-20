@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 })
 export class PostCreateComponent {
   private postService = inject(PostService);
-  private authService = inject(AuthService);
   private router = inject(Router);
 
   userId: string = '';

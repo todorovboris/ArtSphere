@@ -4,7 +4,6 @@
     <h2>
       Profile <span class="email-info">{{ currentUser.email }}</span>
     </h2>
-    <!-- <p class="email-info">{{ currentUser.email }}</p> -->
   </div>
   } @if (userPosts.length >0) {
   <div class="user-posts-grid">
@@ -14,7 +13,6 @@
         <img [src]="post.imageUrl" [alt]="post.title" class="post-image" />
         <div class="card-overlay">
           <h3>{{ post.title }}</h3>
-          <!-- <p>{{ post.info }}</p> -->
         </div>
       </a>
     </div>

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AuthService, PostService } from '../../../services';
+import { PostService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Post } from '../../../types';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -13,7 +13,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 export class PostEditComponent {
   post: Post | null = null;
 
-  private authService = inject(AuthService);
   private postService = inject(PostService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);

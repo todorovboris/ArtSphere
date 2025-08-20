@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Post } from '../../../types';
 import { PostService } from '../../../services';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-posts-catalog',

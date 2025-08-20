@@ -3,7 +3,7 @@ import { AuthService, PostService } from '../../services';
 import { Post, User } from '../../types';
 import { RouterLink } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
-import { catchError, finalize, of, take } from 'rxjs';
+import { catchError, of, take } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
